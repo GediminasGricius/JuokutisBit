@@ -11,12 +11,22 @@ import { JokeService } from 'src/app/services/joke.service';
 export class JokeComponent implements OnInit {
 
   public joke:Joke|null=null;
+  public loading=true;
+  public error=false;
 
   constructor( private jokeService:JokeService) { }
 
   private loadJoke(){
-    this.jokeService.getJoke().subscribe((result)=>{
-      this.joke=result;
+    this.loading=true;
+    this.jokeService.getJoke().subscribe({
+      next:(result)=>{
+        this.joke=result;
+        this.loading=false;
+      },
+      error:(error)=>{
+        console.log(error.status);
+        this.error=true; 
+      }
     });
   }
 
