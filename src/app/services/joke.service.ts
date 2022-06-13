@@ -6,10 +6,27 @@ import { Joke } from '../models/joke';
   providedIn: 'root'
 })
 export class JokeService {
+  private categories:string[]=[
+    "Programming",
+    "Misc",
+    "Dark",
+    "Pun",
+    "Spooky",
+    "Christmas"
+  ];
 
   constructor(private http:HttpClient) { }
 
-  public getJoke(){
-     return this.http.get<Joke>("https://v2.jokeapi.dev/joke/Programming?type=single");
+  public getJoke(category:string,jokeType:string){
+     return this.http.get<Joke>("https://v2.jokeapi.dev/joke/"+category,{
+       params:{
+         type:jokeType
+       }
+     });
   }
+
+  public getCategories(){
+    return this.categories;
+  }
+
 }

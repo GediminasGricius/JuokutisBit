@@ -13,12 +13,15 @@ export class JokeComponent implements OnInit {
   public joke:Joke|null=null;
   public loading=true;
   public error=false;
+  public categories:string[]=[];
+  public category:string="";
+  public type:string="";
 
   constructor( private jokeService:JokeService) { }
 
   private loadJoke(){
     this.loading=true;
-    this.jokeService.getJoke().subscribe({
+    this.jokeService.getJoke(this.category, this.type  ).subscribe({
       next:(result)=>{
         this.joke=result;
         this.loading=false;
@@ -31,7 +34,7 @@ export class JokeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadJoke();
+    this.categories=this.jokeService.getCategories();
   }
 
   public nextJoke(){

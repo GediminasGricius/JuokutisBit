@@ -1,11 +1,35 @@
 <div class="card">
     <div class="card-body">
+        <div class="mb-3">
+            <div class="mb-3">
+                <label class="form-label">Kategorija:</label>
+                <select class="form-control" [(ngModel)]="category" >
+                    <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Type:</label>
+                <select class="form-control" [(ngModel)]="type" >
+                    <option value=""></option>
+                    <option value="single">Single</option>
+                    <option value="twopart">Twopart</option>
+                </select>
+            </div>
+            <button class="btn btn-success" (click)="nextJoke()">Load Joke</button>
+        </div>
+        <hr>
         <div *ngIf="!loading && !error">
             <h4> Joke: </h4> 
             <div class="mb-2">
-                {{ joke?.joke }}
+                <div *ngIf="(joke!=null && joke.type=='single')">
+                    {{ joke?.joke }}
+                </div>
+                <div *ngIf="(joke!=null && joke.type=='twopart')">
+                    <p>{{ joke?.setup }}</p>
+                    <p>{{ joke?.delivery }}</p>
+                </div>
             </div>
-            <button class="btn btn-success" (click)="nextJoke()">Next Joke</button>
+            
         </div>
         <div *ngIf="loading && !error" class="alert alert-info">
             Joke is loading...
